@@ -13,4 +13,4 @@ class Profile(models.Model):
   def __str__(self):
     return self.user.username # typeerror
 
-# TODO install pillow
+# todo install pillow

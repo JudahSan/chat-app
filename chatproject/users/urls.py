@@ -32,7 +32,7 @@ urlpatterns = [
       auth_view.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html'),
       name='password_reset_compelete'),
     
-    path('register/', 
-      views.register,
-      name='register'),
+    path('register/',views.register,name='register'),
+
+    path('edit/', views.edit,name='edit'),
 ]
