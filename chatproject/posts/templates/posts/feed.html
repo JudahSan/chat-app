@@ -1,0 +1,40 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block body %}
+
+
+<div class="grid grid-cols-1 justify-center">
+
+  {% for post in posts %}
+  <div class="flex justify-center">
+    <div class="block w-80 h-240 rounded-lg shadow-lg bg-white max-w-full text-center mt-6 " style="height:480ox !important;">
+      <div class="flex items-center space-x-">
+        <img class="w-10 h-10 rounded-full" src="{{post.user.profile.photo.url}}" alt="Profile Image"/>
+          <div class="font-medium dark:text-white">
+              <div class="mx-2 my-2 font-bold"><span class="text-pink-500">{{post.user}}</span></div>
+            </div>
+        </div>
+        <a href="#">
+          <img class="rounded-t-lg object-fill h-48 w-96" src="{{post.image.url}}" alt="Image Post" />
+
+          <div class="px-6 py-2">
+            <div class="icon-container flex gap-4">
+              <img class="w-5 h-5" src="{% static '/images/like.png' %}" alt="like button" />
+              <img class="w-5 h-5" src="{% static '/images/comment.png' %}" alt="like button" />
+              <img class="w-5 h-5" src="{% static '/images/share.png' %}" alt="like button" />
+            </div>
+          </div>
+          <div>
+            <div><h5 class="mb-2 text-2l text-left font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</h5></div>
+            
+            <p class="mb-3 font-normal text-xs text-left text-text-gray-700 dark:text-gray-400">{{ post.caption }}</p>
+
+          </div>
+        </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock %}
