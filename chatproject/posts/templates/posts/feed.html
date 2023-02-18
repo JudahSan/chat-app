@@ -2,6 +2,7 @@
 <!-- Math filters template -->
 {% load mathfilters %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block body %}
 
 
@@ -56,11 +57,45 @@
             <p class="mb-3 font-normal text-xs text-left text-text-gray-700 dark:text-gray-400">{{ post.caption }}</p>
 
           </div>
+
+
+          <!-- Comment form -->
+          <div class="px-5 py-5">
+            <form method="post">
+              {% csrf_token %}
+              <div class="text-xs font-bold">
+                <label >
+                  Your Comment
+                </label>
+              </div>
+              <div>
+                {{ comment_form.message|as_crispy_field }}
+              </div>
+              <div>
+                <input type="hidden" name="post_id" id="post_id" value="{{ post.id }}" />
+              </div>
+              <div class="content-start">
+                <button type="submit" class="py-2.5 px-4 content-start text-xs w-50 bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">Post Comment</button>
+              </div>
+            </form>
+          </div>
+
+
+          <!-- Comments -->
+
+          <div class="px-5 py-5 text-xs text-left">
+            {% for comment in post.comments.all %}
+            {{ comment.message }} <br> <br>
+            {% endfor %}
+
+          </div>
         </a>
     </div>
   </div>
   {% endfor %}
 </div>
+
+
 
 <script type="text/javascript">
   // Testing js
@@ -87,3 +122,4 @@
 
 </script>
 {% endblock %}
+
