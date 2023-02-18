@@ -19,9 +19,16 @@
 
           <div class="px-6 py-2">
             <div class="icon-container flex gap-4">
-              <img class="w-5 h-5" src="{% static '/images/like.png' %}" alt="like button" />
+              <a id="{{ post.id }}" class="btn-like">
+                <img class="w-5 h-5" src="{% static '/images/like.png' %}" alt="like button" />
+              </a>
+
+
               <img class="w-5 h-5" src="{% static '/images/comment.png' %}" alt="like button" />
-              <img class="w-5 h-5" src="{% static '/images/share.png' %}" alt="like button" />
+              <img class="w-5 h-5" src="{% static 'images/shares.png' %}" alt="share button" />
+  
+              
+              
             </div>
           </div>
           <div>
