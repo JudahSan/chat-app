@@ -17,3 +17,5 @@ To be or not to be
 
 - [JQuery](https://releases.jquery.com/)
  - like button functionality
+ 
+- After making changes to static files run this command: `python manage.py collectstatic`

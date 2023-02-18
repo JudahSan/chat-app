@@ -20,7 +20,11 @@
           <div class="px-6 py-2">
             <div class="icon-container flex gap-4">
               <a id="{{ post.id }}" class="btn-like">
+                {% if logged_user in post.liked_by.all %}
+                <img class="w-5 h-5" src="{% static '/images/pinklike.png' %}" alt="like button" />
+                {% else %}
                 <img class="w-5 h-5" src="{% static '/images/like.png' %}" alt="like button" />
+                {% endif %}
               </a>
 
 
@@ -43,5 +47,27 @@
   {% endfor %}
 </div>
 
+<script type="text/javascript">
+  // Testing js
+  let fruit = ["pineapple", "mango", "watermelon", "banana"];
+  for (let i = 0; i < fruit.length; i++) {
+    console.log(fruit[i])
+  }
+  let autobot = ["prime", "prowl", "bumblebee", "jazz"];
+  autobot.forEach(bot=> {
+    console.log(bot);
+  })
+  // pass in a csrf token
+  window.CSRF_Token = "{{ csrf_token }}"
+  $(document).on('click', '.btn-like', function() {
+    let post_id = this.id 
+    // ajax post request
+    $.ajax({
+      method:"POST",
+      url:'/posts/like',
+      data:{post_id:post_id, csrfmiddlewaretoken:window.CSRF_Token}
+    });
+  });
 
+</script>
 {% endblock %}
