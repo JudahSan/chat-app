@@ -14,3 +14,6 @@ To be or not to be
   ```
   python manage.py tailwind start
   ```
+
+- [JQuery](https://releases.jquery.com/)
+ - like button functionality
