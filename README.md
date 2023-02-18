@@ -19,3 +19,9 @@ To be or not to be
  - like button functionality
  
 - After making changes to static files run this command: `python manage.py collectstatic`
+
+> NB: to perform math operations like + - and * in template syntax, use math filters library
+
+```
+pip install django-mathfilters
+```
