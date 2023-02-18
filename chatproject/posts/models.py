@@ -26,8 +26,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
   post = models.ForeignKey(Post , on_delete=models.CASCADE, related_name='comments')
-  message = models.TextField()
+  message = models.CharField(max_length=120)
   created = models.DateTimeField(auto_now=True)
+  post_by = models.CharField(max_length=50)
 
   # ordering comments
   class Meta:
