@@ -1,0 +1,128 @@
+{% extends 'users/base.html' %}
+<!-- Math filters template -->
+{% load mathfilters %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+
+<div class="grid grid-cols-1 justify-center">
+
+  {% for post in posts %}
+  <div class="flex justify-center">
+    <div class="block w-80 h-240 rounded-lg shadow-lg bg-white max-w-full text-center mt-6 " style="height:480ox !important;">
+      <div class="flex items-center space-x-">
+        <img class="w-10 h-10 rounded-full" src="{{post.user.profile.photo.url}}" alt="Profile Image"/>
+          <div class="font-medium dark:text-white">
+              <div class="mx-2 my-2 font-bold"><span class="text-pink-500">{{post.user}}</span></div>
+            </div>
+        </div>
+        <a href="#">
+          <img class="rounded-t-lg object-fill h-48 w-96" src="{{post.image.url}}" alt="Image Post" />
+
+          <div class="px-6 py-2">
+            <div class="icon-container flex gap-4 content-start">
+              <a id="{{ post.id }}" class="btn-like">
+                {% if logged_user in post.liked_by.all %}
+                <img class="w-5 h-5" src="{% static '/images/pinklike.png' %}" alt="like button" />
+                {% else %}
+                <img class="w-5 h-5" src="{% static '/images/like.png' %}" alt="like button" />
+                {% endif %}
+              </a>
+
+
+              <img class="w-5 h-5" src="{% static '/images/comment.png' %}" alt="like button" />
+              <img class="w-5 h-5" src="{% static 'images/shares.png' %}" alt="share button" />
+  
+              
+              
+            </div>
+          </div>
+          
+          <!-- Like count -->
+          <div >
+            <p class="text-left text-pink-500 italic text-xs">
+              {% if post.liked_by.count < 1 %}
+              {% elif post.liked_by.count == 1 %}
+              {{ post.liked_by.first }} Likes this
+              {% elif post.liked_by.count > 1 %}
+              {{ post.liked_by.first }} & {{post.liked_by.count|sub:1}} peep(s) Likes this
+              {% endif %}
+            </p>
+
+          </div>
+          <div>
+            <div><h5 class="mb-2 text-2l text-left font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</h5></div>
+            
+            <p class="mb-3 font-normal text-xs text-left text-text-gray-700 dark:text-gray-400">{{ post.caption }}</p>
+
+          </div>
+
+
+          <!-- Comment form -->
+          <div class="px-5 py-5">
+            <form method="post">
+              {% csrf_token %}
+
+              <div class="text-xs font-bold">
+                <label >
+                  Your Comment
+                </label>
+              </div>
+              <div>
+                {{ comment_form.message|as_crispy_field }}
+              </div>
+              <div>
+                <input type="hidden" name="post_id" id="post_id" value="{{ post.id }}" />
+                <input type="hidden" name="post_by" id="post_by" value="{{ logged_user }}" />
+              </div>
+              <div class="content-start">
+                <button type="submit" class="py-2.5 px-4 content-start text-xs w-50 bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">Post Comment</button>
+              </div>
+
+            </form>
+          </div>
+
+
+          <!-- Comments -->
+
+          <div class="px-5 py-5 text-xs text-left">
+            {% for comment in post.comments.all %}
+            <b><em>{{ comment.post_by }}</em></b> : {{ comment.message }} <br> <br>
+            {% endfor %}
+
+          </div>
+        </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+<script type="text/javascript">
+  // Testing js
+  let fruit = ["pineapple", "mango", "watermelon", "banana"];
+  for (let i = 0; i < fruit.length; i++) {
+    console.log(fruit[i])
+  }
+  let autobot = ["prime", "prowl", "bumblebee", "jazz"];
+  autobot.forEach(bot=> {
+    console.log(bot);
+  })
+  // pass in a csrf token
+  window.CSRF_Token = "{{ csrf_token }}"
+  $(document).on('click', '.btn-like', function() {
+    let post_id = this.id 
+    // ajax post request
+    $.ajax({
+      method:"POST",
+      url:'/posts/like',
+      data:{post_id:post_id, csrfmiddlewaretoken:window.CSRF_Token}
+    });
+    window.location.href="http://127.0.0.1:8000/posts/feed"
+  });
+
+</script>
+{% endblock %}
+
