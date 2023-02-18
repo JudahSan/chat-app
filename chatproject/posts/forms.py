@@ -21,4 +21,4 @@ class PostCreateForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
   class Meta: 
     model = Comment 
-    fields = ('message', )
+    fields = ('message', 'post_by' )
